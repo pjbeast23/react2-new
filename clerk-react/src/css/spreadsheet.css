@@ -1,0 +1,170 @@
+/* Spreadsheet.css */
+
+/* Basic reset to ensure consistency across browsers */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Excel-like font */
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Container for centering the table */
+table {
+  border-collapse: collapse;
+  width: 90%;
+  max-width: 1200px; /* Increased width for better visibility */
+  margin: 20px auto; /* Added margin for spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Style for table cells */
+td, th {
+  border: 1px solid #dcdcdc;
+  padding: 10px;
+  text-align: left;
+  min-width: 120px; /* Set minimum width for a wider cell */
+  height: 40px; /* Reduced height for a more compact look */
+  background-color: #ffffff;
+  color: #333;
+  font-size: 14px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* Sticky Header */
+th {
+  position: sticky;
+  top: 0;
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cell Hover and Active State */
+td:hover {
+  background-color: #e6f7ff; /* Light blue highlight on hover */
+  border-color: #99ccff; /* Change border color on hover */
+}
+
+td:focus-within {
+  background-color: #cceeff; /* Slightly darker blue on focus */
+  border-color: #66b2ff; /* Highlight border on focus */
+  outline: none; /* Remove default outline */
+}
+
+input[type="text"] {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 5px;
+  color: #333;
+  background-color: transparent;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  font-weight: normal;
+  text-align: left;
+}
+
+/* Focus state for input fields */
+input[type="text"]:focus {
+  background-color: #e1f5fe;
+  box-shadow: 0 0 8px #1e90ff;
+}
+
+/* Style for alternate row colors */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f0f0f5;
+  transition: background-color 0.3s ease;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Add a responsive design for smaller screens */
+@media (max-width: 768px) {
+  table {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  td, th {
+    padding: 8px;
+    font-size: 12px;
+    min-width: 80px; /* Adjusted for smaller screens */
+  }
+
+  input[type="text"] {
+    font-size: 12px;
+    padding: 4px;
+  }
+}
+/* Add this to your stylesheet */
+.toolbar {
+  margin-bottom: 10px;
+}
+
+button {
+  margin-right: 5px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+/* Spreadsheet.css */
+.spreadsheet {
+  display: grid;
+  grid-template-columns: repeat(10, 100px); /* Assuming 10 columns */
+  gap: 2px;
+}
+
+.row {
+  display: contents; /* Allows each row to take full width */
+}
+
+input {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+

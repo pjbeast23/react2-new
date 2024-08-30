@@ -1,0 +1,49 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Build artifacts
+dist/
+build/
+
+# Logs
+*.log
+
+# Dependency directories
+jspm_packages/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor files
+.vscode/
+.idea/
+
+# NPM package-lock
+package-lock.json
+npm-debug.log
+
+# Yarn lock file (if using Yarn)
+yarn.lock
+
+# Coverage reports
+coverage/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Custom directories
+custom-dir/
+
+# Debug files
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Serverless deployment files
+.serverless/
