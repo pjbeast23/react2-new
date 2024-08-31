@@ -30,14 +30,15 @@ io.on('connection', (socket) => {
   socket.on('updateCell', ({ row, col, value, style }) => {
     let displayValue = value;
     
-    if (value.startsWith('=')) {
-        try {
-            displayValue = eval(value.substring(1)).toString();
-        } catch (error) {
-            console.error('Error evaluating formula:', error);
-            displayValue = 'ERROR';
-        }
-    }
+    // if (value.endsWith('=')) {
+    //     try {
+    //         const expression = formula.slice(0, -1).trim();
+    //         displayValue = eval(expression).toString();
+    //     } catch (error) {
+    //         console.error('Error evaluating formula:', error);
+    //         displayValue = 'ERROR';
+    //     }
+    // }
 
     spreadsheetData[row][col] = { value: displayValue, style };
     io.emit('cellUpdated', { row, col, value: displayValue, style }); // Notify all clients

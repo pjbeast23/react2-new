@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import FormulaBox from './FormulaBox';
 import '../css/spreadsheet.css'; // Assuming your CSS is in the same directory
 
 interface SpreadsheetProps {}
@@ -25,6 +24,31 @@ const Spreadsheet: React.FC<SpreadsheetProps> = () => {
 const [replaceTerm, setReplaceTerm] = useState('');
 const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
 const [cellReference, setCellReference] = useState<string>('');
+const addRow = () => {
+  setGrid((prevGrid) => [
+    ...prevGrid,
+    Array(prevGrid[0].length).fill({ value: '', style: {} })
+  ]);
+};
+
+// New function to add a column
+const addColumn = () => {
+  setGrid((prevGrid) =>
+    prevGrid.map(row => [...row, { value: '', style: {} }])
+  );
+};
+
+// New function to delete a row
+const deleteRow = (rowIndex: number) => {
+  setGrid((prevGrid) => prevGrid.filter((_, index) => index !== rowIndex));
+};
+
+// New function to delete a column
+const deleteColumn = (colIndex: number) => {
+  setGrid((prevGrid) =>
+    prevGrid.map(row => row.filter((_, index) => index !== colIndex))
+  );
+};
 
 
 const handleFindReplace = () => {
@@ -184,30 +208,6 @@ const computeFormulas = () => {
     return newGrid;
   });
 };
-const computeFormula = (formula: string) => {
-  if (selectedCell) {
-    const { row, col } = selectedCell;
-    setGrid((prevGrid) => {
-      const newGrid = [...prevGrid];
-      let computedValue = '';
-
-      try {
-        // Evaluate the formula only if it ends with '='
-        if (formula.trim().endsWith('=')) {
-          const formulaWithoutEquals = formula.slice(0, -1).trim();
-          computedValue = evalFormula(formulaWithoutEquals, prevGrid);
-        }
-      } catch (error) {
-        computedValue = 'ERROR';
-      }
-
-      newGrid[row][col] = { ...newGrid[row][col], value: computedValue };
-      return newGrid;
-    });
-
-    socket.emit('updateCell', { row: selectedCell.row, col: selectedCell.col, value: computedValue, style: currentStyle });
-  }
-};
 
 const evalFormula = (formula: string, grid: { value: string; style: React.CSSProperties }[][]) => {
   // Replace cell references with actual values from the grid
@@ -277,7 +277,15 @@ const columnToLetter = (column: number): string => {
   }
   return letter;
 };
-
+const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, row: number, col: number) => {
+  if (e.key === 'Tab') {
+    e.preventDefault(); // Prevent default tab behavior
+    if (grid[row][col].value.trim().endsWith('=')) {
+      handleComputeButtonClick();
+    }
+    // Move to the next cell, optionally implement tab navigation here
+  }
+};
 
   return (
     <div>
@@ -292,6 +300,8 @@ const columnToLetter = (column: number): string => {
         <button onClick={() => changeBackgroundColor('white')}>Normal Background</button>
         {/* <FormulaBox onCompute={computeFormula} /> */}
         <button onClick={handleComputeButtonClick}>Compute Formula</button>
+        
+        
         <input 
         type="text" 
         placeholder="Find" 
@@ -326,6 +336,7 @@ const columnToLetter = (column: number): string => {
               value={cell.value}
               style={cell.style}
               onChange={(e) => handleChange(e, rowIndex, colIndex)}
+              onKeyDown={(e) => handleKeyDown(e, rowIndex, colIndex)}
               onClick={() => setSelectedCell({ row: rowIndex, col: colIndex })}
             />
             {selectedCell?.row === rowIndex && selectedCell?.col === colIndex && (
@@ -335,8 +346,12 @@ const columnToLetter = (column: number): string => {
             )}
           </td>
         ))}
+        
+        
       </tr>
+      
     ))}
+    
   </tbody>
 </table>
 
