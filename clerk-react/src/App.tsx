@@ -1,6 +1,5 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import Spreadsheet from "./components/spreadsheet";
-import Toolbar from "./components/Toolbar"; // New toolbar component
 import './App.css';
 
 export default function App() {
